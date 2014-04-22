@@ -26,7 +26,7 @@ Figure 1 presents schematically the overall setup of our expreriment and its mai
 
 * Regular expressions and musical groupings
 
-The output produced by our initial device (2012) presents some readily recognizeable interesting characteristics.  The difference of phase between the rate of the counter and the variable rate of the sampling of the
+The output produced by our initial device (2012) already presented some recognizeable interesting characteristics.  The clock rate of the counter can be adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figure (2).
 
 is based on the theory of regular expressions. Such expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.  We define a mini-language as a type of regular language, for musical live coding.  We present a new Class in SuperCollider ``LHCV''.  This builds on the LHC class which was used as ``minimal interface for live hardware coding''.  It enables the modeling of a variable clock rate in the hardware rate.  Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
 
