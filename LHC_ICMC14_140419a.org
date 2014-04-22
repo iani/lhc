@@ -24,7 +24,7 @@ Futhermore, we have developed a new kind of interface which allows more intimate
 
 Figure 1 presents schematically the overall setup of our expreriment and its main components.
 
-* Regular expressions and musical groupings
+* Structural Level 1: Palindromes
 
 The output produced by our initial device (2012) had three levels:
 
@@ -34,28 +34,77 @@ The output produced by our initial device (2012) had three levels:
 
 3. The decoding of the sampled states by a Huffmann decoder into a stream whose alphabet consisted of the 4 symbols A, B, C and D.
 
-Already the output 2 above presents some interesting characteristics.  The clock rate of the counter is adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figure (2).  We created a class LHCV in order to simulate this process and explored it in greater detail.
-
-
-
-
-
-
-The observations made led to the question whether the machine could also detect patterns in the signal, using algorithmic ways of processing the output.  Since the patterns of output 2 were recognizeable by humans our "bet" was what kind of patterns the machine could recognize from the symbol stream that is the output of 3.  To analyse the string of symbols we employed the techniques of regular expressions, which are one of the first tools of choice for such tasks.  These expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.  We thus defined a mini-regular-language for musical live coding.
+Already the output 2 above presents some interesting characteristics.  The clock rate of the counter is adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figure (2).  We created a class LHCV in order to simulate this process and explore it in greater detail.
 
 Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
 
 Such an approach has applications in education but also in design at all levels. It also opens new ways to approach live coding~\cite{Collins:03}. The value of low-level approach has already been noted~\cite{Bovermann:14}. Here we try to take this approach to the limit.
 
+** LHCV and quasi-palindromes
+LHCV is a class which is modelling the machine with the variable clock
+rate. The main functionality of this machine can be expressed in one
+line of code using SuperCollider.
 
-** Discussion?
+\begin{verbatim}
+{Latch.ar(Stepper.ar(Impulse.ar(Line.kr(1,99,9))),Impulse.ar(8))}.plot(9)
+\end{verbatim}
 
-The development of our experiment using software, provide us useful tools for analysis and visual and symbolic representations. We have described the main functionality of the machine with the variable clock rate (LHCV) in one line of code. This gives us the opportunity to realise that the quasi-palindromic structures is a matter of down-sampling. Our efforts conclude to the development of regular expressions that describe a mini-language.
+The above code produces quasi-palindromic structures as demonstrated
+in the following plot. X-axis represents the number of samples and
+Y-axis represents the diatonic degrees from 1 to 7, and 0 (zero) is
+for pause.
+# QUASI-PLOT1
+\includegraphics[scale=0.5]{Figure 1.pdf}
 
-The GUI that we have developed in SuperCollider has three buttons, a reset button and a potentiometer for input, imitating the hardware prototypes. The initial experiment was applying on the note level (Miranda 2001). With the development of regular expressions we can now apply on the building-block level. We do not intend to push the human agent to its own limits, regarding his cognitive efforts. We use as a typical time frame 0.5 seconds (tempo = 120bpm), so already the process lays on our limits of music perception (Koelsch and Siebel 2005). Experimenting using such an apparatus for live music-making relies on subconscious processes. Whether or not this can be used as an expressive way to live coding is something that might need more developments. But we believe that by ``designing constrains'' (Magnusson 2010) using grammatical interfaces for musical expression is a promising field for experimentations as it is a new area of musical practices based on computation and it is much less explored that its functional based kin. Computing nowadays is a valuable supplement for calculus. Algorithms provide a more reasonable and consistent way to compute things.
 
-Into this scope ``constraints are seen as compositional rules'' (Magnusson). Whether or not this is for real-time or non real-time usage is a matter of the composer/performer. Interesting applications could be involved also for the microscopic level, in which the process becomes ubiquitious.  Imagine somebody who will be able to program effortlessly as he will swimming in a ``pool of code'' (soup alhabet - Hofstadter:658). Probably this is the essence of live coding and interactive programming.  The deduction of the cognitive effort plus a journey in minimal expressions.  A typical duration for a live coding performace is ten to twenty minutes.  Code expressions must be elegant and short, in order to be coherent and easy to debug.  Whether or not it is feasible to write programs unconsciously is a subject for research that lays on the field of human-computer interaction and philosophy.
+Palindromes have significant melodic properties in music. This
+approach demonstrates a straight-forward way to produce
+quasi-palindromic structures. This is a matter of down-sampling that is
+clearly demonstrated over the above code chunk. It could be
+interesting to determine the ranges where the palindromes occurs. [We
+assume that the user doesn't changes both input (step argument) and
+clk - also we observe that we cannot reconstruct the original waveform
+as a consequence of Shannon's theorem (?)]
 
+The first argument of the Latch UGen is the input, while the second is
+the trigger for latching the value. The Stepper operates as the modulo
+8 function and its first argument is the trigger. This observation
+demonstrates that by applying a linear function into the frequency
+argument of the trigger (Stepper) is an approach for generate
+quasi-palindromic structures.
+
+*** Musical code examples
+An audible sc-tweet:
+
+\begin{verbatim}
+play{p=Impulse;SendTrig.ar(Changed.ar(a=Latch.ar(Stepper.ar(p.ar(Line.kr(99,
+1,40,1,0,2))),p.ar(8))),0,a)};OSCFunc({|m|(degree:m[3]).play},'/tr')
+\end{verbatim}
+
+We observe a uniform distrubution over the diatonic degrees. In an
+out-of-the-box thinking this can be perceived as a technique for
+composing canons.
+
+*** Using GUI in Lilt2
+Follows an interactive example based on Lilt2 developed by IZ.
+
+\begin{verbatim}
+
+// Lilt2
+////
+(
+SynthDef(\mod8, { |clk=1 xclk=1.1 input=1|
+	var p=LFPulse;
+	var signal = Latch.ar(Stepper.ar(p.ar(xclk), step: input).poll, p.ar(clk));
+	Out.ar(0, SinOsc.ar(100*signal.poll))
+}).synthGui(
+	specs: [
+		clk: [0.1, 2.0],
+		xclk: [1.0, 20.0],
+		input: ControlSpec(0, 7, \lin, 1)
+]);
+)
+\end{verbatim}
 
 
 * System Architecture
@@ -69,6 +118,9 @@ We have develop this experiment as a Quark for SuperCollider, named LHC.
 \includegraphics[scale=0.65]{LHC-GUI2}
 
 * A mini-language for LHC (mLHC)
+
+The observations made led to the question whether the machine could also detect patterns in the signal, using algorithmic ways of processing the output.  Since the patterns of output 2 were recognizeable by humans our "bet" was what kind of patterns the machine could recognize from the symbol stream that is the output of 3.  To analyse the string of symbols we employed the techniques of regular expressions, which are one of the first tools of choice for such tasks.  These expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.  We thus defined a mini-regular-language for musical live coding.
+
 
 ``mLHC'' is a regular language in Chomsky hierarchy. The alphabet of
 that language consists of the output symbols from the
@@ -134,73 +186,6 @@ string from the encoder.
 The start state is S and the accept state is D; \varepsilon -
 transitions have marked with the latin letter ``e''.
 
-* LHCV and quasi-palindromes
-LHCV is a class which is modelling the machine with the variable clock
-rate. The main functionality of this machine can be expressed in one
-line of code using SuperCollider.
-
-\begin{verbatim}
-{Latch.ar(Stepper.ar(Impulse.ar(Line.kr(1,99,9))),Impulse.ar(8))}.plot(9)
-\end{verbatim}
-
-The above code produces quasi-palindromic structures as demonstrated
-in the following plot. X-axis represents the number of samples and
-Y-axis represents the diatonic degrees from 1 to 7, and 0 (zero) is
-for pause.
-# QUASI-PLOT1
-\includegraphics[scale=0.5]{Figure 1.pdf}
-
-
-Palindromes have significant melodic properties in music. This
-approach demonstrates a straight-forward way to produce
-quasi-palindromic structures. This is a matter of down-sampling that is
-clearly demonstrated over the above code chunk. It could be
-interesting to determine the ranges where the palindromes occurs. [We
-assume that the user doesn't changes both input (step argument) and
-clk - also we observe that we cannot reconstruct the original waveform
-as a consequence of Shannon's theorem (?)]
-
-The first argument of the Latch UGen is the input, while the second is
-the trigger for latching the value. The Stepper operates as the modulo
-8 function and its first argument is the trigger. This observation
-demonstrates that by applying a linear function into the frequency
-argument of the trigger (Stepper) is an approach for generate
-quasi-palindromic structures.
-
-** Musical code examples
-An audible sc-tweet:
-
-\begin{verbatim}
-play{p=Impulse;SendTrig.ar(Changed.ar(a=Latch.ar(Stepper.ar(p.ar(Line.kr(99,
-1,40,1,0,2))),p.ar(8))),0,a)};OSCFunc({|m|(degree:m[3]).play},'/tr')
-\end{verbatim}
-
-We observe a uniform distrubution over the diatonic degrees. In an
-out-of-the-box thinking this can be perceived as a technique for
-composing canons.
-
-** Using GUI in Lilt2
-Follows an interactive example based on Lilt2 developed by IZ.
-
-\begin{verbatim}
-
-// Lilt2
-////
-(
-SynthDef(\mod8, { |clk=1 xclk=1.1 input=1|
-	var p=LFPulse;
-	var signal = Latch.ar(Stepper.ar(p.ar(xclk), step: input).poll, p.ar(clk));
-	Out.ar(0, SinOsc.ar(100*signal.poll))
-}).synthGui(
-	specs: [
-		clk: [0.1, 2.0],
-		xclk: [1.0, 20.0],
-		input: ControlSpec(0, 7, \lin, 1)
-]);
-)
-\end{verbatim}
-
-
 * Physiological capabilities
 
 The crucial question underlying these experiments concerns the relationship of unconscious and consious processes in musical experience.  Is it possible to conduct music making through programming in a similar way as traditional live music making activities, that is, to involve the intuitive (unconscious) and physical levels of the creative process together with the highly analytical processes of programming?
@@ -214,6 +199,16 @@ We perceive what we expect to see. The different levels of experience that occur
 ** Speed coding
 
 It is inevitable that next generations will be faster in their interaction with the machines. We could imagine future systems of HCI that will improve our capabilities into this (video Collins speed coding). Obviously speed matters in evolution (Hikosaka 2013) but this is not the case in art practices. Slow coding represent a completely different perspective into this. But we are making music. Music is a complex phenomenon and a really demanding task. ``Should music interaction be easy?'' (McDermontetal2013).
+
+** Discussion?
+
+The development of our experiment using software, provide us useful tools for analysis and visual and symbolic representations. We have described the main functionality of the machine with the variable clock rate (LHCV) in one line of code. This gives us the opportunity to realise that the quasi-palindromic structures is a matter of down-sampling. Our efforts conclude to the development of regular expressions that describe a mini-language.
+
+The GUI that we have developed in SuperCollider has three buttons, a reset button and a potentiometer for input, imitating the hardware prototypes. The initial experiment was applying on the note level (Miranda 2001). With the development of regular expressions we can now apply on the building-block level. We do not intend to push the human agent to its own limits, regarding his cognitive efforts. We use as a typical time frame 0.5 seconds (tempo = 120bpm), so already the process lays on our limits of music perception (Koelsch and Siebel 2005). Experimenting using such an apparatus for live music-making relies on subconscious processes. Whether or not this can be used as an expressive way to live coding is something that might need more developments. But we believe that by ``designing constrains'' (Magnusson 2010) using grammatical interfaces for musical expression is a promising field for experimentations as it is a new area of musical practices based on computation and it is much less explored that its functional based kin. Computing nowadays is a valuable supplement for calculus. Algorithms provide a more reasonable and consistent way to compute things.
+
+Into this scope ``constraints are seen as compositional rules'' (Magnusson). Whether or not this is for real-time or non real-time usage is a matter of the composer/performer. Interesting applications could be involved also for the microscopic level, in which the process becomes ubiquitious.  Imagine somebody who will be able to program effortlessly as he will swimming in a ``pool of code'' (soup alhabet - Hofstadter:658). Probably this is the essence of live coding and interactive programming.  The deduction of the cognitive effort plus a journey in minimal expressions.  A typical duration for a live coding performace is ten to twenty minutes.  Code expressions must be elegant and short, in order to be coherent and easy to debug.  Whether or not it is feasible to write programs unconsciously is a subject for research that lays on the field of human-computer interaction and philosophy.
+
+
 
 * Next steps
 
