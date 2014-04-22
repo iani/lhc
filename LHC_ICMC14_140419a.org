@@ -1,0 +1,297 @@
+#+TITLE: Bridging machine and human processing in low-level live coding of music.
+
+* Abstract
+:PROPERTIES:
+:DATE:     <2014-04-19 Sat 22:36>
+:END:
+
+Current advances in digital fabrication are accompanied by efforts to bring about increased facility in the fabrication of digital circuits. In this context, of tangibility can apply to the intimate contact with objects as programmable entities forming part of the human-material loop in the sense of physical computing. In this paper, we explore the possibilities of making music with very simple circuits, using an equally minimal interface for live interaction with the hardware.
+
+Our aim is to find new ways for experiencing the behavior of circuits and for navigating inside the data space of generative algorithms with musical devices, in  by using minimal interfaces, while involving both human and machine in the "perception" of the musical output.  In our experiment we have focused on the lowest level of the machine language ~\cite{Diapoulis:12}, that of manipulating bits in real-time.  Furthermore, we attempt to tighten the loop between human and machine by introducing a machine listening component which processes the output of the human-machine interaction.  This splits the perceptual feedback loop into a human and a machine part, and makes the final output a joint outcome of both.
+
+* Introduction
+
+** LHC in live music-making
+
+Live coding is a practice which blurs the limits between composition and performance (Blackwell and Collins 2005).  It is also considered as a new notation form (Magnusson 2011) or a method for developing notations, albeit in its infancy.  Live coding from scratch usually follows a bottom-up approach, building musical elements incrementally from simple to more complex ones.  However, from the point of view of the computer, the constructs presented are high-level abstractions  (for example: SinOsc, Synth, Pattern, Routine, Scale).  In this paper we present an approach that attempts to start from low-level computational elements, namely bits and their manipulation through simple automata that make up the building blocks of digital circuits.  However, writing code at the lowest level of machine language seems hardly a practical method for constructing music, and no more a usual method for constructing programs.
+
+In musical terms this experiment addresses interest as we are not applying any design metaphors (Stowell and McLean 2013), which is a common practice in computer music. Instead we seek to communicate to computer musicians some fundamental notions and processes of computing machinery, such as bits, symbols, binary representation of numbers, serial transimission, decoding and encoding process among others. Furthermore, the performer does not need any previous experience in programming. Such an apparatus might have educational aspects (Collins 2012) as well.
+
+The design of this experiment is so minimalistic that follows the general rule of 7 $\pm$ 2 elements (usually refered as Miller's law).  We use three input buttons, one reset button, a potensiometer and two LED displays which reflect the current state of the machine. The main purpose of this experiment is to develop a bottom-up minimal programming language and environment for live music-making.
+
+We have already presented a low-level approach to live coding. Into this approach the language likely belongs to type-0 grammars (Grune 2007: 72) in Chomsky hierarchy. Whether or not this language can be followed by humans remains an open question; we would like to thank Nick Collins who set this question during live.code.fest in Karlsruhe.
+
+The development of our experiment using software, provide us useful tools for analysis and visual and symbolic representations. We have described the main functionality of the machine with the variable clock rate (LHCV) in one line of code. This gives us the opportunity to realise that the quasi-palindromic structures is a matter of down-sampling. Our efforts conclude to the development of regular expressions that describe a mini-language.
+
+The GUI that we have developed in SuperCollider has three buttons, a reset button and a potentiometer for input, imitating the hardware prototypes. The initial experiment was applying on the note level (Miranda 2001). With the development of regular expressions we can now apply on the building-block level. We do not intend to push the human agent to its own limits, regarding his cognitive efforts. We use as a typical time frame 0.5 seconds (tempo = 120bpm), so already the process lays on our limits of music perception (Koelsch and Siebel 2005). Experimenting using such an apparatus for live music-making relies on subconscious processes. Whether or not this can be used as an expressive way to live coding is something that might need more developments. But we believe that by ``designing constrains'' (Magnusson 2010) using grammatical interfaces for musical expression is a promising field for experimentations as it is a new area of musical practices based on computation and it is much less explored that its functional based kin. Computing nowadays is a valuable supplement for calculus. Algorithms provide a more reasonable and consistent way to compute things.
+
+Into this scope ``constraints are seen as compositional rules'' (Magnusson). Whether or not this is for real-time or non real-time usage is a matter of the composer/performer. Interesting applications could be involved also for the microscopic level, in which the process becomes ubiquitious.  Imagine somebody who will be able to program effortlessly as he will swimming in a ``pool of code'' (soup alhabet - Hofstadter:658). Probably this is the essence of live coding and interactive programming.  The deduction of the cognitive effort plus a journey in minimal expressions.  A typical duration for a live coding performace is ten to twenty minutes.  Code expressions must be elegant and short, in order to be coherent and easy to debug.  Whether or not it is feasible to write programs unconsciously is a subject for research that lays on the field of human-computer interaction and philosophy.
+
+** What we present
+
+In this article we present new developments in our previous research in live hardware coding.  In Diapoulis and Zannos (2012) we presented a first design of a 3-bit minimal interface and discussed its use with a counter coupled to a decoder as generator of musical structures. Such devices are implementations of automata which act as processes that generate data. Our aim is to develop interfaces that enable us to explore and experience the behavior of these processes as musical processes at the building block level, that is, as musical phrases or sections comprised of groups of single note events~cite{Miranda:01}.
+
+Our approach is based on the theory of regular expressions. Such expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.
+
+We define a mini-language as a type of regular language, for musical live coding.  We present a new Class in SuperCollider ``LHCV''.  This builds on the LHC class which was used as ``minimal interface for live hardware coding''.  It enables the modeling of a variable clock rate in the hardware rate.  Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
+
+Such an approach has applications in education but also in design at all levels. It also opens new ways to approach live coding~\cite{Collins:03}. The value of low-level approach has already been noted~\cite{Bovermann:14}. Here we try to take this approach to the limit.
+
+** Discussion: Low Level Coding
+
+* System Architecture
+
+Our experiment is is based on the combination two elementary blocks of digital design: A counter and a decoder. Both are sequential circuits which can be represented by a finite state machine~\cite{csd120}. The counter is a 3-bit counter machine which operates as the modulo 8 function using 2's complement. The decoding machine is a Huffman decoder which operates with variable length code and uses a combinational encoding process to procudes symbol sequences from an alphabet of four symbols with specific weights. The human agent provides a 3-bit parallel input to the counter by means of three buttons and a potentiometer. We have developed two different machines, one with a fixed clock and one with a variable clock rate. The potentiometer controls the counter's positive edge clock. It it is an external module which applies only to the machine with the variable clock rate. The output from the counter machine is read in serial order by the decoding machine. The decoder has a single bit input, and an output alphabet of four symbols (A,B,C,D).
+
+In the original experiment, both machines were developed using prototype circuit boards and TTL technology. The output from the counter and the decoder are sent to an arduino board, which is connected to SuperCollider via USB cable. We use SimpleMessageSystem arduino's library which is controlled from ArduinoSMS class in SuperCollider. SuperCollider is responsible for real-time sound synthesis. We have mapped counter's output, numbers 1 to 7 to the seven diatonic degrees and 0 (zero) to silence (pause). The four symbols produced from the decoder provides us the opportunity for senondary mapping.
+
+We have develop this experiment as a Quark for SuperCollider, named LHC.
+
+\includegraphics[scale=0.65]{LHC-GUI2}
+
+* A mini-language for LHC (mLHC)
+
+``mLHC'' is a regular language in Chomsky hierarchy. The alphabet of
+that language consists of the output symbols from the
+decoder/encoder. Each word is being recognised at run-time by doing
+lexical analysis with POSIX expressions.
+
+
+** System representation
+We introduce the following diagram to sketch out a panoramic picture
+of the experiment.
+
+#PICTURE OF SYSTEM - schema
+# !!!!!!!!!!!! replace FSM with LHC !!!!!!!!!!!!!!!!
+# maybe remove Huffman coding from 2nd context
+\includegraphics[scale=0.5]{LHC_system}
+
+The input is provided by the human agent in terms of a 3-bit parallel
+input. Up to now this have been done by means of three input buttons
+and a potensiometer. Many different ways can be applied to this
+concept. For example, we can apply the 3-bit input for spatial
+applications. Regarding the 3D binary cube representation, by mapping
+each bit (LS..MS) to a bit-plane. So that the interface is extendable
+to gestural performances.
+
+The counter machine operates as the modulo 8 addition function in 2's
+complement. It transmits in serial order the 3-bit output to Huffman
+decoder machine. After the decoding and encoding process the output is
+an ongoing string which consists of four symbols (A, B, C, D).
+
+#ALPHABET
+** Alphabet
+The alphabet consists of three letters (symbols) and the empty string
+{\varepsilon}. Symbol \textit{A} is mapped to \varepsilon (A \rightarrow
+\varepsilon). In such a way we can reduce the complexity of the
+tokens. So the alphabet is \Sigma = { \Beta, C, D }.
+
+** Language
+We define the language L which contains every product of the
+alphabet \Sigma^{*} which ends with the letter D, as follows:
+
+L = { w \epsilon \Sigma^{*} : w every word that ends with a D }
+
+** Regural expressions
+# if the pumpin is for odd or even this becomes a regular language?
+Using the following POSIX expressions we can recognize every token
+which ends with a 'D', which is used as an end-marker. The set of the
+accepted words have an infinite cardinality, though they can be
+expressed by a finite state automaton (Grune 2007).
+
+\begin{verbatim}
+// POSIX expression
+D | B+D | C+D | (B+C+)+D | (C+B+)+D | (B+C+)+B+D | (C+B+)+C+D
+\end{verbatim}
+
+\noindent Where plus (+) symbol, stands for ``at least one''.
+** Graph for lexical analysis
+The following picture shows the non determistic automaton which
+describes visually the recognisition process on the ongoing output
+string from the encoder.
+#+COMMENT the D-state DOES NOT have a D-transition!!!!
+\includegraphics[scale=0.7]{NFA-mLHC.png}
+
+The start state is S and the accept state is D; \varepsilon -
+transitions have marked with the latin letter ``e''.
+
+* LHCV and quasi-palindromes
+LHCV is a class which is modelling the machine with the variable clock
+rate. The main functionality of this machine can be expressed in one
+line of code using SuperCollider.
+
+\begin{verbatim}
+{Latch.ar(Stepper.ar(Impulse.ar(Line.kr(1,99,9))),Impulse.ar(8))}.plot(9)
+\end{verbatim}
+
+The above code produces quasi-palindromic structures as demonstrated
+in the following plot. X-axis represents the number of samples and
+Y-axis represents the diatonic degrees from 1 to 7, and 0 (zero) is
+for pause.
+# QUASI-PLOT1
+\includegraphics[scale=0.5]{Figure 1.pdf}
+
+
+Palindromes have significant melodic properties in music. This
+approach demonstrates a straight-forward way to produce
+quasi-palindromic structures. This is a matter of down-sampling that is
+clearly demonstrated over the above code chunk. It could be
+interesting to determine the ranges where the palindromes occurs. [We
+assume that the user doesn't changes both input (step argument) and
+clk - also we observe that we cannot reconstruct the original waveform
+as a consequence of Shannon's theorem (?)]
+
+The first argument of the Latch UGen is the input, while the second is
+the trigger for latching the value. The Stepper operates as the modulo
+8 function and its first argument is the trigger. This observation
+demonstrates that by applying a linear function into the frequency
+argument of the trigger (Stepper) is an approach for generate
+quasi-palindromic structures.
+
+** Musical code examples
+An audible sc-tweet:
+
+\begin{verbatim}
+play{p=Impulse;SendTrig.ar(Changed.ar(a=Latch.ar(Stepper.ar(p.ar(Line.kr(99,
+1,40,1,0,2))),p.ar(8))),0,a)};OSCFunc({|m|(degree:m[3]).play},'/tr')
+\end{verbatim}
+
+We observe a uniform distrubution over the diatonic degrees. In an
+out-of-the-box thinking this can be perceived as a technique for
+composing canons.
+
+** Using GUI in Lilt2
+Follows an interactive example based on Lilt2 developed by IZ.
+
+\begin{verbatim}
+
+// Lilt2
+////
+(
+SynthDef(\mod8, { |clk=1 xclk=1.1 input=1|
+	var p=LFPulse;
+	var signal = Latch.ar(Stepper.ar(p.ar(xclk), step: input).poll, p.ar(clk));
+	Out.ar(0, SinOsc.ar(100*signal.poll))
+}).synthGui(
+	specs: [
+		clk: [0.1, 2.0],
+		xclk: [1.0, 20.0],
+		input: ControlSpec(0, 7, \lin, 1)
+]);
+)
+\end{verbatim}
+
+
+* Physiological capabilities
+
+The crucial question underlying these experiments concerns the relationship of unconscious and consious processes in musical experience.  Is it possible to conduct music making through programming in a similar way as traditional live music making activities, that is, to involve the intuitive (unconscious) and physical levels of the creative process together with the highly analytical processes of programming?
+
+** Memory
+
+We perceive what we expect to see. The different levels of experience that occur in our apparatus involve all three levels of musical experience from event-fusion, melodic and rythmic grouping up to musical form (Snyder 2000). [And this is because of the development of regexp... (building-block level).]  That means that memory plays an important role as it involves all types of memory modules.
+
+** Speed coding
+
+It is inevitable that next generations will be faster in their interaction with the machines. We could imagine future systems of HCI that will improve our capabilities into this (video Collins speed coding). Obviously speed matters in evolution (Hikosaka 2013) but this is not the case in art practices. Slow coding represent a completely different perspective into this. But we are making music. Music is a complex phenomenon and a really demanding task. ``Should music interaction be easy?'' (McDermontetal2013).
+
+* Next steps
+
+** Source code
+   The source code in this apparatus is the 3-bit input from the
+   user. This is responsinsible for the production of the tokens. And
+   here is the paradox. It is common practice to the source code to be
+   compiled into symbolic code.
+
+- Parsing trees - Semantics
+- run-time language environment (using an interpreter)
+- Artificial Intelligence
+
+** Tangible aspects of the interface
+   We map the decimal representation of the 3-bit input, which
+   reflects the binary representation of numbers 0-7, to the seven
+   diatonic degrees (zero represents silence-pause). In such a way we
+   can access the seven diatonic degrees with three buttons.
+
+
+# QUASI-PLOT1
+\includegraphics[scale=0.075]{binaryPiano.jpg}
+
+
+* Conclusions
+The level of abstraction that we introduce provides a new kind of
+experience in live coding, and sets new open-questions to the field.
+
+Whether or not live coding is just a state of mind (Magnusson 2014) or
+a self-referential (Collins 2011) phenomenon is something that we
+might have to elaborate more. But we think that already live coders
+have been doing well as they have already introduced new aspects in
+technological advents, that of transparent procedures (show us your
+screens). Usually technology is used to withhold user's faults, where
+this is not the case in a live coding performance.
+
+* References
+- Bovermann, T. and D. Griffiths (2014). ``Computation as material in
+  live coding''. MIT Press
+- Collins, N., A. McLean, J. Rorhruber and A. Ward. (2003). ``Live
+  coding in laptop performance''. Organised Sound 8(3):
+  321-330. Cambridge University Press.
+- Collins, N. (2011). ``Live coding of consequence''.
+- Collins, N. (2012). ``Trading Faures: Virtual Musicians and Machine Ethics''.
+- Diapoulis, G. and I. Zannos (2012). ``A minimal interface for live
+  hardware coding''. In Live Interfaces 2012, ICSRiM, Leeds University.
+- Grune, D. (2007). Parsing techniques: A practical guide.
+- Hikosaka etal (2013). ``Why skill matters''.
+- Hofstander, D. (1985). ``Questing for the essence of mind and pattern''.
+- Lerdahl (1983), §6.2, pg.128 (time-span tree and metrical
+  structures)
+  §9.2, pg.213 - Prolongation reduction well-formedness rules
+  - see pg. 214 - 4 rules (4. no crossing branching)
+- Koelsch, Siebel. (2005). ``Towards a neural basis of music
+  perception''. Trends in cognitive science.
+- Magnusson (2010). ``Designing Constraints''. MIT Press
+- Magnusson. T. (2011). ``Algorithms as Scores: Coding Live
+  Music''. Leonardo Music Journal, Vol: 21, pp 19-23, 2011. MIT Press.
+- Magnusson (2014). ``Herding Cats: Observing Live Coding in the
+  wild''. MIT Press
+- Miranda (2001). ``Composing music with computers''.
+- Patel (2003). ``Language, music, syntax and the brain''. Review
+  Nature neuroscience.
+- Snyder, B. (2000). ``Music and Memory''. MIT Press
+- Stowell, D., and A. McLean (2010). ``Live music-making: a rich open
+  task requires a rich open interface''
+- James McDermott, Toby Gifford, Anders Bouwer, and Mark Wagy (2013). ``Should Music Interaction Be Easy?''
+
+
+* Comments on References
+- Magnusson2014
+- Bovermann2014
+- Collins2011
+- Stowell2010
+- Koelsch2005
+- Patel2003
+- Snyder2000
+  - "Also note that the direct connection between perceptual
+    categorization and LTM raises the possibility of unconscious
+    perception and memory" (pg. 8)
+  - recongise, identify pg(10)
+- Hofstandter1985
+  - "can even go so far as to say that no information exists at that
+    lowest level." (p. 646)
+  - "AI’S Goal Should Be to Bridge the Gap between Cognition and
+    Subcognition" (p. 653)
+- Tom Hall (slow code) - http://www.ludions.com/slowcode/
+
+* Personal Notes
+# - our design is not based on any existing "music-alike" instrument
+  (our device is an interface though)
+# - desire / we are condemned to desire (Alexandros)
+# - leave him to his own devices
+- ... but we cannot admit that dexterity in hci will be inevitably be
+  improved in fourtcoming generations of computerisc musicians.
+  - considering to contact Belle for performance in icmc. bbc
+    embarrassment
+- https://en.wikipedia.org/wiki/Monotonous_grammar (see for \varepsilon)
+- http://www.csee.umbc.edu/~squire/reference/grammar_def.shtml
+- http://www.csd.uwo.ca/~moreno//CS447/Lectures/Syntax.html/node4.html
+- http://ccl.pku.edu.cn/doubtfire/Syntax/Introduction/Chomsky/Chomsky_Hierarchy/Chapter%2024%20The%20Chomsky%20Hierarchy.htm
+- http://stackoverflow.com/questions/5696750/posix-regular-expressions-limit-repetition
