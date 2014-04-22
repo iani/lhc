@@ -51,7 +51,7 @@ The input is provided by the human agent in terms of a 3-bit parallel input.  Th
 
 * Observation of Output: Exploring Palindromes
 
-From the three levels of output described above, output level 2 presents some interesting characteristics.  The clock rate of the counter is adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figure (2).  We created a class LHCV in order to simulate this process and explore it in greater detail.
+From the three levels of output described above, output level 2 presents some interesting characteristics.  The clock rate of the counter is adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figures (n and m).  We created a class LHCV in order to simulate this process and explore it in greater detail.
 
 Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
 
@@ -144,7 +144,7 @@ The crucial question underlying these experiments concerns the relationship of u
 ** Fast vs. Slow
 It is inevitable that next generations will be faster in their interaction with the machines. We could imagine future systems of HCI that will improve our capabilities into this (video Collins speed coding).   Speed matters in evolution (Hikosaka 2013) but this is not the case in art practices.  Slow coding represent a completely different perspective into this. But we are making music. Music is a complex phenomenon and a really demanding task. ``Should music interaction be easy?'' (McDermontetal2013).
 
-** Conclusion
+* Conclusion
 
 The development of our experiment using software, provides us with some experimental tools for analysis and visual and symbolic representations.  The level of abstraction that we introduce provides a new kind of experience in live coding, and sets new open-questions to the field. Whether or not live coding is just a state of mind (Magnusson 2014) or a self-referential (Collins 2011) phenomenon is something that we might have to elaborate more. But we think that already live coders have been doing well as they have already introduced new aspects in technological advents, that of transparent procedures (show us your screens). Usually technology is used to withhold user's faults, where this is not the case in a live coding performance.
 
