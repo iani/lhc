@@ -108,23 +108,18 @@ The observations about the emergence of patterns made at the first stage of the 
 ``mLHC'' is a regular language in Chomsky hierarchy. The alphabet of that language consists of the output symbols from the decoder/encoder. Each word is being recognised at run-time through lexical analysis with POSIX expressions.
 
 ** Alphabet
-The alphabet consists of three letters (symbols) and the empty string
-{\varepsilon}. Symbol \textit{A} is mapped to \varepsilon (A \rightarrow
-\varepsilon). In such a way we can reduce the complexity of the
-tokens. So the alphabet is \Sigma = { \Beta, C, D }.
+
+The alphabet of our language consists of three letters (symbols) and the empty string {\varepsilon}. Symbol \textit{A} is mapped to \varepsilon (A \rightarrow \varepsilon). In such a way we can reduce the complexity of the tokens. So the alphabet is \Sigma = { \Beta, C, D }.
 
 ** Language
-We define the language L which contains every product of the
-alphabet \Sigma^{*} which ends with the letter D, as follows:
+
+We define the language L which contains every product of the alphabet \Sigma^{*} which ends with the letter D, as follows:
 
 L = { w \epsilon \Sigma^{*} : w every word that ends with a D }
 
-** Regural expressions
-# if the pumpin is for odd or even this becomes a regular language?
-Using the following POSIX expressions we can recognize every token
-which ends with a 'D', which is used as an end-marker. The set of the
-accepted words have an infinite cardinality, though they can be
-expressed by a finite state automaton (Grune 2007).
+** Regular expressions
+
+Using the following POSIX expressions we can recognize every token which ends with a 'D', which is used as an end-marker. The set of the accepted words have an infinite cardinality, though they can be expressed by a finite state automaton (Grune 2007).
 
 \begin{verbatim}
 // POSIX expression
@@ -132,6 +127,7 @@ D | B+D | C+D | (B+C+)+D | (C+B+)+D | (B+C+)+B+D | (C+B+)+C+D
 \end{verbatim}
 
 \noindent Where plus (+) symbol, stands for ``at least one''.
+
 ** Graph for lexical analysis
 The following picture shows the non determistic automaton which
 describes visually the recognisition process on the ongoing output
@@ -139,67 +135,22 @@ string from the encoder.
 #+COMMENT the D-state DOES NOT have a D-transition!!!!
 \includegraphics[scale=0.7]{NFA-mLHC.png}
 
-The start state is S and the accept state is D; \varepsilon -
-transitions have marked with the latin letter ``e''.
+The start state is S and the accept state is D; \varepsilon - transitions have marked with the latin letter ``e''.
 
-* Physiological capabilities
+* Discussion: Physiology, Perception, Interaction
 
-The crucial question underlying these experiments concerns the relationship of unconscious and consious processes in musical experience.  Is it possible to conduct music making through programming in a similar way as traditional live music making activities, that is, to involve the intuitive (unconscious) and physical levels of the creative process together with the highly analytical processes of programming?
+The crucial question underlying these experiments concerns the relationship of unconscious and consious processes in musical experience.  Is it possible to conduct music making through programming in a similar way as traditional live music making activities, that is, to involve the intuitive (unconscious) and physical levels of the creative process together with the highly analytical processes of programming?  Already our interface has been pushing in this direction, since it is possible to run the clock rate at the limits of the perception of individual notes.
 
-Already our interface has been Such a contact can be further developed through the use of
+** Fast vs. Slow
+It is inevitable that next generations will be faster in their interaction with the machines. We could imagine future systems of HCI that will improve our capabilities into this (video Collins speed coding).   Speed matters in evolution (Hikosaka 2013) but this is not the case in art practices.  Slow coding represent a completely different perspective into this. But we are making music. Music is a complex phenomenon and a really demanding task. ``Should music interaction be easy?'' (McDermontetal2013).
 
-** Memory
+** Conclusion
 
-We perceive what we expect to see. The different levels of experience that occur in our apparatus involve all three levels of musical experience from event-fusion, melodic and rythmic grouping up to musical form (Snyder 2000). [And this is because of the development of regexp... (building-block level).]  That means that memory plays an important role as it involves all types of memory modules.
+The development of our experiment using software, provides us with some experimental tools for analysis and visual and symbolic representations.  The level of abstraction that we introduce provides a new kind of experience in live coding, and sets new open-questions to the field. Whether or not live coding is just a state of mind (Magnusson 2014) or a self-referential (Collins 2011) phenomenon is something that we might have to elaborate more. But we think that already live coders have been doing well as they have already introduced new aspects in technological advents, that of transparent procedures (show us your screens). Usually technology is used to withhold user's faults, where this is not the case in a live coding performance.
 
-** Speed coding
+A further question concerns the role perceptual and cognitive processing limits in live coding and human-machine interaction.  We used as a typical time frame 0.5 seconds (tempo = 120bpm), and by accellerating beyond that, limits of music perception (Koelsch and Siebel 2005) could be felt.  Experimenting using such an apparatus for live music-making relies on subconscious processes.  Whether or not this can be used as an expressive way to live coding is a question still open to further research.  But we believe that by ``designing constrains'' (Magnusson 2010) using grammatical interfaces for musical expression is a promising field for experimentations as it is a new area of musical practices based on computation.  In our setup we could also observe the computational algorithms (symbolic) juxtaposed to the simulation of signal processes that belong to the domain of Calculus.
 
-It is inevitable that next generations will be faster in their interaction with the machines. We could imagine future systems of HCI that will improve our capabilities into this (video Collins speed coding). Obviously speed matters in evolution (Hikosaka 2013) but this is not the case in art practices. Slow coding represent a completely different perspective into this. But we are making music. Music is a complex phenomenon and a really demanding task. ``Should music interaction be easy?'' (McDermontetal2013).
-
-** Discussion?
-
-The development of our experiment using software, provide us useful tools for analysis and visual and symbolic representations. We have described the main functionality of the machine with the variable clock rate (LHCV) in one line of code. This gives us the opportunity to realise that the quasi-palindromic structures is a matter of down-sampling. Our efforts conclude to the development of regular expressions that describe a mini-language.
-
-The GUI that we have developed in SuperCollider has three buttons, a reset button and a potentiometer for input, imitating the hardware prototypes. The initial experiment was applying on the note level (Miranda 2001). With the development of regular expressions we can now apply on the building-block level. We do not intend to push the human agent to its own limits, regarding his cognitive efforts. We use as a typical time frame 0.5 seconds (tempo = 120bpm), so already the process lays on our limits of music perception (Koelsch and Siebel 2005). Experimenting using such an apparatus for live music-making relies on subconscious processes. Whether or not this can be used as an expressive way to live coding is something that might need more developments. But we believe that by ``designing constrains'' (Magnusson 2010) using grammatical interfaces for musical expression is a promising field for experimentations as it is a new area of musical practices based on computation and it is much less explored that its functional based kin. Computing nowadays is a valuable supplement for calculus. Algorithms provide a more reasonable and consistent way to compute things.
-
-Into this scope ``constraints are seen as compositional rules'' (Magnusson). Whether or not this is for real-time or non real-time usage is a matter of the composer/performer. Interesting applications could be involved also for the microscopic level, in which the process becomes ubiquitious.  Imagine somebody who will be able to program effortlessly as he will swimming in a ``pool of code'' (soup alhabet - Hofstadter:658). Probably this is the essence of live coding and interactive programming.  The deduction of the cognitive effort plus a journey in minimal expressions.  A typical duration for a live coding performace is ten to twenty minutes.  Code expressions must be elegant and short, in order to be coherent and easy to debug.  Whether or not it is feasible to write programs unconsciously is a subject for research that lays on the field of human-computer interaction and philosophy.
-
-
-
-* Next steps
-
-** Source code
-   The source code in this apparatus is the 3-bit input from the
-   user. This is responsinsible for the production of the tokens. And
-   here is the paradox. It is common practice to the source code to be
-   compiled into symbolic code.
-
-- Parsing trees - Semantics
-- run-time language environment (using an interpreter)
-- Artificial Intelligence
-
-** Tangible aspects of the interface
-   We map the decimal representation of the 3-bit input, which
-   reflects the binary representation of numbers 0-7, to the seven
-   diatonic degrees (zero represents silence-pause). In such a way we
-   can access the seven diatonic degrees with three buttons.
-
-
-# QUASI-PLOT1
-\includegraphics[scale=0.075]{binaryPiano.jpg}
-
-
-* Conclusions
-The level of abstraction that we introduce provides a new kind of
-experience in live coding, and sets new open-questions to the field.
-
-Whether or not live coding is just a state of mind (Magnusson 2014) or
-a self-referential (Collins 2011) phenomenon is something that we
-might have to elaborate more. But we think that already live coders
-have been doing well as they have already introduced new aspects in
-technological advents, that of transparent procedures (show us your
-screens). Usually technology is used to withhold user's faults, where
-this is not the case in a live coding performance.
+Into this scope ``constraints are seen as compositional rules'' (Magnusson). Whether or not this is for real-time or non real-time usage is a matter of the composer/performer. Interesting applications could be developed also on the microscopic level.  This may lead to states of training where programming will become as effortless as swimming in a ``pool of code'' (soup alhabet - Hofstadter:658).  Perhaps this is at least one part of the essence of live coding and interactive programming.  The deduction of the cognitive effort plus a journey in minimal expressions.  A typical duration for a live coding performace is ten to twenty minutes.  Code expressions must be elegant and short, in order to be coherent and easy to debug.  Whether or not it is feasible to write programs unconsciously is a subject for research that is a subject both for human-computer interaction and for philosophy.
 
 * References
 - Bovermann, T. and D. Griffiths (2014). ``Computation as material in
