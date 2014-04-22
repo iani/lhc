@@ -14,7 +14,7 @@ Our aim is to find new ways for experiencing the behavior of circuits and for na
 
 Live coding as a practice blurs the limits between composition and performance (Blackwell and Collins 2005).  It is also considered as a new notation form (Magnusson 2011) or a method for developing notations, albeit in its infancy.  Live coding from scratch usually follows a bottom-up approach, building musical elements incrementally from simple to more complex ones.  Yet from the point of view of the computer, the musician uses high-level abstractions for coding (for example: SinOsc, Synth, Pattern, Routine, Scale).  In this paper we present an approach that attempts to start from low-level computational elements, namely bits and their manipulation through simple automata that make up the building blocks of digital circuits.  Writing code at the lowest level of machine language seems hardly a practical method for constructing music, and no more a usual method for constructing programs.  Our experiment is motivated by the question, whether it is possible to create an intimate link between musician/coder and machine which, while still based on digital programming principles, addresses both the human and the machine in an integrative manner.  By that we mean integrating different functions or faculties such as sensation (input), perception (human/machine listening), planning (computation), action and comprehension as closely connected as possible, in order to form a closely knit whole.  This is a prerequisite for forming the closest possible interactive link between human and machine, one that creates a "tangible" contact between the two.
 
-In this experiment we are not applying any design metaphors from computer music, but look for grammatical interfaces that open the way to hacking, as suggested by Stowell and McLean (2013).  Our starting point is not music, but computational processes.  Our question is how the performer can use computational processes as raw material to form into something approaching a musical performance.  Therefore, we developed devices and interfaces that serve to communicate to computer musicians some fundamental notions and processes of computing machinery, such as bits, symbols, binary representation of numbers, serial transimission, decoding and encoding process, and lexical analysis. We do not ask of the performer any previous experience in programming.  Such an apparatus might have educational uses (Collins 2012).
+In this experiment we are not applying any design metaphors from computer music, but search for grammatical interfaces that open the way to hacking, as suggested by Stowell and McLean (2013).  Our starting point is not music, but computational processes.  Our question is how the performer can use computational processes as raw material to form into something approaching a musical performance.  Therefore, we developed devices and interfaces that serve to communicate to computer musicians some fundamental notions and processes of computing machinery, such as bits, symbols, binary representation of numbers, serial transimission, decoding and encoding process, and lexical analysis. We do not ask of the performer any previous experience in programming.  Such an apparatus might have educational uses (Collins 2012).
 
 In our design, we sought to obey the general rule of presenting the user with 7 $\pm$ 2 elements at any moment (usually refered as Miller's law).  We use three input buttons, one reset button, a potensiometer and two LED displays which reflect the current state of the machine.   Equipped with this interface, we sought to develop a bottom-up minimal programming language and environment for live music-making.
 
@@ -32,17 +32,26 @@ In the original experiment, both machines were developed using prototype circuit
 
 \includegraphics[scale=0.65]{LHC-GUI2}
 
-* Structural Level 1: Palindromes
+Following diagram gives an overview of the experiment (Figure N).
 
-The output produced by our initial device (2012) had three levels:
+#PICTURE OF SYSTEM - schema
+# !!!!!!!!!!!! replace FSM with LHC !!!!!!!!!!!!!!!!
+# maybe remove Huffman coding from 2nd context
+\includegraphics[scale=0.5]{LHC_system}
+
+* Hardware interface
+The first device used for operating this machine consisted of of three input buttons and a potentiometer.  Many different ways can be applied to this concept.  For example, we can apply the 3-bit input for spatial applications.  Regarding the 3D binary cube representation, by mapping each bit (LS..MS) to a bit-plane.  Recently, a more sensitive tactile interface with very light switches was constructed as an alternative way to drive the device.
+
+* Processing and output
+The input is provided by the human agent in terms of a 3-bit parallel input.  This drives a counter machine which implement the modulo 8 addition function in 2's complement. The counter transmits in serial order the 3-bit output to Huffman decoder machine.  The final output is a stream of symbols whose alphabe consists of the four symbols (A, B, C, D).  Overall, the output produced by our initial device (2012) had three levels:
 
 1. The output of a variable-rate counter programmed by the 3-bit switch interface.
-
 2. The output of sampling the states of the counter at a steady-rate.
-
 3. The decoding of the sampled states by a Huffmann decoder into a stream whose alphabet consisted of the 4 symbols A, B, C and D.
 
-Already the output 2 above presents some interesting characteristics.  The clock rate of the counter is adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figure (2).  We created a class LHCV in order to simulate this process and explore it in greater detail.
+* Observation of Output: Exploring Palindromes
+
+From the three levels of output described above, output level 2 presents some interesting characteristics.  The clock rate of the counter is adjusted by a knob, while the rate at which the state of the clock is sampled by the software system that receives its output is steady.  This creates a downsampling-artefact which results in quasi-palindromic structures shown in Figure (2).  We created a class LHCV in order to simulate this process and explore it in greater detail.
 
 Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
 
@@ -92,35 +101,12 @@ SynthDef(\mod8, { |clk=1 xclk=1.1 input=1|
 )
 \end{verbatim}
 
-* A mini-language for LHC (mLHC)
+* In search for further patterns: A mini-language for LHC (mLHC)
 
-The observations made led to the question whether the machine could also detect patterns in the signal, using algorithmic ways of processing the output.  Since the patterns of output 2 were recognizeable by humans our "bet" was what kind of patterns the machine could recognize from the symbol stream that is the output of 3.  To analyse the string of symbols we employed the techniques of regular expressions, which are one of the first tools of choice for such tasks.  These expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.  We thus defined a mini-regular-language for musical live coding.
+The observations about the emergence of patterns made at the first stage of the experiment above led to the question whether the machine could also detect patterns in the signal, using algorithmic ways of processing the output.  Since the patterns of output 2 were recognizeable by humans our "bet" was what kind of patterns the machine could recognize from the symbol stream that is the output of 3.  To analyse the string of symbols we employed the techniques of regular expressions, which are one of the first tools of choice for such tasks.  These expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.  We thus defined a mini-regular-language for musical live coding.
 
-``mLHC'' is a regular language in Chomsky hierarchy. The alphabet of that language consists of the output symbols from the decoder/encoder. Each word is being recognised at run-time by doing lexical analysis with POSIX expressions.
+``mLHC'' is a regular language in Chomsky hierarchy. The alphabet of that language consists of the output symbols from the decoder/encoder. Each word is being recognised at run-time through lexical analysis with POSIX expressions.
 
-** System representation
-We introduce the following diagram to sketch out a panoramic picture
-of the experiment.
-
-#PICTURE OF SYSTEM - schema
-# !!!!!!!!!!!! replace FSM with LHC !!!!!!!!!!!!!!!!
-# maybe remove Huffman coding from 2nd context
-\includegraphics[scale=0.5]{LHC_system}
-
-The input is provided by the human agent in terms of a 3-bit parallel
-input. Up to now this have been done by means of three input buttons
-and a potensiometer. Many different ways can be applied to this
-concept. For example, we can apply the 3-bit input for spatial
-applications. Regarding the 3D binary cube representation, by mapping
-each bit (LS..MS) to a bit-plane. So that the interface is extendable
-to gestural performances.
-
-The counter machine operates as the modulo 8 addition function in 2's
-complement. It transmits in serial order the 3-bit output to Huffman
-decoder machine. After the decoding and encoding process the output is
-an ongoing string which consists of four symbols (A, B, C, D).
-
-#ALPHABET
 ** Alphabet
 The alphabet consists of three letters (symbols) and the empty string
 {\varepsilon}. Symbol \textit{A} is mapped to \varepsilon (A \rightarrow
