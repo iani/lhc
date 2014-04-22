@@ -11,9 +11,9 @@ Our aim is to find new ways for experiencing the behavior of circuits and for na
 
 * Introduction
 
-** LHC in live music-making
+** LHC and Tangibility in live music-making
 
-Live coding as a practice blurs the limits between composition and performance (Blackwell and Collins 2005).  It is also considered as a new notation form (Magnusson 2011) or a method for developing notations, albeit in its infancy.  Live coding from scratch usually follows a bottom-up approach, building musical elements incrementally from simple to more complex ones.  Yet from the point of view of the computer, the musician uses high-level abstractions for coding (for example: SinOsc, Synth, Pattern, Routine, Scale).  In this paper we present an approach that attempts to start from low-level computational elements, namely bits and their manipulation through simple automata that make up the building blocks of digital circuits.  Writing code at the lowest level of machine language seems hardly a practical method for constructing music, and no more a usual method for constructing programs.  The
+Live coding as a practice blurs the limits between composition and performance (Blackwell and Collins 2005).  It is also considered as a new notation form (Magnusson 2011) or a method for developing notations, albeit in its infancy.  Live coding from scratch usually follows a bottom-up approach, building musical elements incrementally from simple to more complex ones.  Yet from the point of view of the computer, the musician uses high-level abstractions for coding (for example: SinOsc, Synth, Pattern, Routine, Scale).  In this paper we present an approach that attempts to start from low-level computational elements, namely bits and their manipulation through simple automata that make up the building blocks of digital circuits.  Writing code at the lowest level of machine language seems hardly a practical method for constructing music, and no more a usual method for constructing programs.  Our experiment is motivated by the question, whether it is possible to create an intimate link between musician/coder and machine which, while still based on digital programming principles, addresses both the human and the machine in a more holistic way.  By holistic, we mean that different functions or faculties such as sensation (input), perception (human/machine listening), planning (computation), action and comprehension should be as closely connected as possible, forming a closely knit whole.  This is a prerequisite for forming the closest possible interactive link between human and machine, one that creates a "tangible" contact between the two.
 
 In musical terms this experiment addresses interest as we are not applying any design metaphors (Stowell and McLean 2013), which is a common practice in computer music. Instead we seek to communicate to computer musicians some fundamental notions and processes of computing machinery, such as bits, symbols, binary representation of numbers, serial transimission, decoding and encoding process among others. Furthermore, the performer does not need any previous experience in programming. Such an apparatus might have educational aspects (Collins 2012) as well.
 
@@ -185,6 +185,8 @@ SynthDef(\mod8, { |clk=1 xclk=1.1 input=1|
 * Physiological capabilities
 
 The crucial question underlying these experiments concerns the relationship of unconscious and consious processes in musical experience.  Is it possible to conduct music making through programming in a similar way as traditional live music making activities, that is, to involve the intuitive (unconscious) and physical levels of the creative process together with the highly analytical processes of programming?
+
+Already our interface has been Such a contact can be further developed through the use of
 
 ** Memory
 
