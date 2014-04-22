@@ -9,9 +9,8 @@ Current advances in digital fabrication are accompanied by efforts to bring abou
 
 Our aim is to find new ways for experiencing the behavior of circuits and for navigating inside the data space of generative algorithms with musical devices, in  by using minimal interfaces, while involving both human and machine in the "perception" of the musical output.  In our experiment we have focused on the lowest level of the machine language ~\cite{Diapoulis:12}, that of manipulating bits in real-time.  Furthermore, we attempt to tighten the loop between human and machine by introducing a machine listening component which processes the output of the human-machine interaction.  This splits the perceptual feedback loop into a human and a machine part, and makes the final output a joint outcome of both.
 
-* Introduction
 
-** LHC and Tangibility in live music-making
+* LHC and Tangibility in live music-making
 
 Live coding as a practice blurs the limits between composition and performance (Blackwell and Collins 2005).  It is also considered as a new notation form (Magnusson 2011) or a method for developing notations, albeit in its infancy.  Live coding from scratch usually follows a bottom-up approach, building musical elements incrementally from simple to more complex ones.  Yet from the point of view of the computer, the musician uses high-level abstractions for coding (for example: SinOsc, Synth, Pattern, Routine, Scale).  In this paper we present an approach that attempts to start from low-level computational elements, namely bits and their manipulation through simple automata that make up the building blocks of digital circuits.  Writing code at the lowest level of machine language seems hardly a practical method for constructing music, and no more a usual method for constructing programs.  Our experiment is motivated by the question, whether it is possible to create an intimate link between musician/coder and machine which, while still based on digital programming principles, addresses both the human and the machine in an integrative manner.  By that we mean integrating different functions or faculties such as sensation (input), perception (human/machine listening), planning (computation), action and comprehension as closely connected as possible, in order to form a closely knit whole.  This is a prerequisite for forming the closest possible interactive link between human and machine, one that creates a "tangible" contact between the two.
 
@@ -21,13 +20,15 @@ In our design, we sought to obey the general rule of presenting the user with 7 
 
 We presented first results of this low-level approach to live coding in (Diapoulis and Zannos 2012).  The language we used likely belongs to type-0 grammars (Grune 2007: 72) in the Chomsky hierarchy.  Whether or not this language can be followed by humans remains an open question; we would like to thank Nick Collins who set this question during live.code.fest in Karlsruhe, 2012.  The basic design that serves as starting point is a 3-bit minimal interface that drives a counter coupled to a decoder as generator of musical structures.  As a next step, our aim is to develop interfaces that enable us to explore and experience the behavior of these processes as musical processes at the building block level, that is, as musical phrases or sections comprised of groups of single note events~cite{Miranda:01}  Here we present first results of this approach, which add higher-level processing of the initial output by the machine.  This can in turn be used as musical material, thereby enriching the final outcome.
 
+Futhermore, we have developed a new kind of interface which allows more intimate and direct tactile interaction with the digital circuit through flexible switches that require very small and light movement, and can be operated while remaining almost entirely in contact with the device.
+
 Figure 1 presents schematically the overall setup of our expreriment and its main components.
 
-** What we present
+* Regular expressions and musical groupings
 
-Our approach is based on the theory of regular expressions. Such expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.
+The output produced by our initial device (2012) presents some readily recognizeable interesting characteristics.  The difference of phase between the rate of the counter and the variable rate of the sampling of the
 
-We define a mini-language as a type of regular language, for musical live coding.  We present a new Class in SuperCollider ``LHCV''.  This builds on the LHC class which was used as ``minimal interface for live hardware coding''.  It enables the modeling of a variable clock rate in the hardware rate.  Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
+is based on the theory of regular expressions. Such expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.  We define a mini-language as a type of regular language, for musical live coding.  We present a new Class in SuperCollider ``LHCV''.  This builds on the LHC class which was used as ``minimal interface for live hardware coding''.  It enables the modeling of a variable clock rate in the hardware rate.  Through this simulation, we can confirm in software the emergence of quasi-palindromic structures which was observed in hardware. In this paper we give the formal framework for describing these phenomena.
 
 Such an approach has applications in education but also in design at all levels. It also opens new ways to approach live coding~\cite{Collins:03}. The value of low-level approach has already been noted~\cite{Bovermann:14}. Here we try to take this approach to the limit.
 
