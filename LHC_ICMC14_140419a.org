@@ -21,6 +21,8 @@ In our design, we sought to obey the general rule of presenting the user with 7 
 
 We presented first results of this low-level approach to live coding in (Diapoulis and Zannos 2012).  The language we used likely belongs to type-0 grammars (Grune 2007: 72) in the Chomsky hierarchy.  Whether or not this language can be followed by humans remains an open question; we would like to thank Nick Collins who set this question during live.code.fest in Karlsruhe, 2012.  The basic design that serves as starting point is a 3-bit minimal interface that drives a counter coupled to a decoder as generator of musical structures.  As a next step, our aim is to develop interfaces that enable us to explore and experience the behavior of these processes as musical processes at the building block level, that is, as musical phrases or sections comprised of groups of single note events~cite{Miranda:01}  Here we present first results of this approach, which add higher-level processing of the initial output by the machine.  This can in turn be used as musical material, thereby enriching the final outcome.
 
+Figure 1 presents schematically the overall setup of our expreriment and its main components.
+
 ** What we present
 
 Our approach is based on the theory of regular expressions. Such expressions define regular languages, that is formal languages that are equivalent to non-deterministic finite automata (NFA) ~\cite{Grune07}.
